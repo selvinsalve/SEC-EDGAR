@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+chromadb
+PyMuPDF
+pydantic
+reportlab
+httpx
+python-multipart
+sqlalchemy
+pyjwt
+passlib[bcrypt]
+bcrypt

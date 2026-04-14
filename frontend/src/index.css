@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Code+Pro:wght@400;500;600&family=Public+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* US Government dark theme — deep navy, muted steel-blue accent */
+    --background: 220 30% 7%;
+    --foreground: 210 18% 88%;
+
+    --card: 220 28% 10%;
+    --card-foreground: 210 18% 88%;
+
+    --popover: 220 28% 10%;
+    --popover-foreground: 210 18% 88%;
+
+    /* Primary: muted steel-blue — official, not flashy */
+    --primary: 210 55% 52%;
+    --primary-foreground: 220 30% 7%;
+
+    --secondary: 218 22% 16%;
+    --secondary-foreground: 210 18% 80%;
+
+    --muted: 218 20% 13%;
+    --muted-foreground: 215 14% 52%;
+
+    --accent: 210 45% 45%;
+    --accent-foreground: 220 30% 7%;
+
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 218 22% 19%;
+    --input: 218 22% 16%;
+    --ring: 210 55% 52%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: 220 28% 8%;
+    --sidebar-foreground: 210 18% 80%;
+    --sidebar-primary: 210 55% 52%;
+    --sidebar-primary-foreground: 220 30% 7%;
+    --sidebar-accent: 218 22% 16%;
+    --sidebar-accent-foreground: 210 18% 80%;
+    --sidebar-border: 218 22% 19%;
+    --sidebar-ring: 210 55% 52%;
+
+    /* Custom tokens */
+    --gov-blue: 210 55% 52%;
+    --gov-blue-dim: 210 40% 35%;
+    --navy-light: 218 22% 22%;
+    --surface-elevated: 220 26% 13%;
+    --stripe: 220 30% 9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Public Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  code, pre {
+    font-family: 'Source Code Pro', monospace;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gov {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(210 55% 62%), hsl(210 45% 75%));
+  }
+
+  /* Keep backward compat alias */
+  .text-gradient-gold {
+    @apply text-gradient-gov;
+  }
+
+  .glow-gov {
+    box-shadow: 0 0 24px -6px hsl(210 55% 52% / 0.30);
+  }
+
+  /* Keep backward compat alias */
+  .glow-gold {
+    @apply glow-gov;
+  }
+
+  .surface-glass {
+    background: hsl(220 28% 10% / 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(218 22% 22% / 0.7);
+  }
+
+  /* Thin top rule — common in federal design systems */
+  .gov-topbar {
+    border-top: 4px solid hsl(210 55% 52%);
+  }
+
+  /* Subtle horizontal rule separator */
+  .section-rule {
+    border-top: 1px solid hsl(218 22% 19%);
+  }
+
+  /* Official badge style */
+  .badge-official {
+    @apply text-xs font-semibold tracking-widest uppercase px-3 py-1;
+    background: hsl(210 55% 52% / 0.12);
+    color: hsl(210 55% 65%);
+    border: 1px solid hsl(210 55% 52% / 0.30);
+    border-radius: 2px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* Formal, structured animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in  { animation: fade-in  0.45s ease both; }
+.animate-slide-up { animation: slide-up 0.5s ease both; }
