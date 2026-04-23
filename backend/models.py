@@ -9,6 +9,4 @@ class User(Base):
     password_hash = Column(String)
     first_name = Column(String)
     last_name = Column(String)
-    # age = Column(Integer)
     business_details = Column(String)
-    address = Column(String)

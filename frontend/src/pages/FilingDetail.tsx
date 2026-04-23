@@ -93,6 +93,17 @@ export default function FilingDetail() {
     if (!type) return;
     setProcessing(true);
     setAnalyticsData(null);
+
+    // Set immediate state for feedback
+    if (status) {
+      setStatus({
+        ...status,
+        status: "Processing",
+        risk_level: "MEDIUM",
+        message: "Starting exhaustive re-scan..."
+      });
+    }
+
     try {
       const res = await apiClient.continueWorkflow(type);
       setStatus(res as any);
@@ -205,10 +216,10 @@ export default function FilingDetail() {
           <div className="space-y-8 animate-slide-up" style={{ animationDelay: "100ms" }}>
             {/* Status banner */}
             <div className={`rounded-sm p-5 border transition-all duration-500 ${status.status === "Processing" ? "border-primary/50 bg-primary/5 shadow-md animate-pulse" :
-                status.risk_level === "LOW" ? "border-emerald-500/30 bg-emerald-500/5 text-emerald-400" :
-                  status.risk_level === "MEDIUM" ? "border-amber-500/30 bg-amber-500/5 text-amber-400" :
-                    status.risk_level === "HIGH" ? "border-rose-500/30 bg-rose-500/5 text-rose-400" :
-                      "border-border bg-card"
+              status.risk_level === "LOW" ? "border-emerald-500/30 bg-emerald-500/5 text-emerald-400" :
+                status.risk_level === "MEDIUM" ? "border-amber-500/30 bg-amber-500/5 text-amber-400" :
+                  status.risk_level === "HIGH" ? "border-rose-500/30 bg-rose-500/5 text-rose-400" :
+                    "border-border bg-card"
               }`}>
               <div className="flex items-center gap-3">
                 {status.status === "Processing" ? (
@@ -219,9 +230,21 @@ export default function FilingDetail() {
                   <AlertTriangle className="w-5 h-5" />
                 )}
                 <div>
-                  <span className="font-semibold text-foreground text-sm tracking-wide uppercase">
-                    {status.status === "Processing" ? "Deep Scan in Progress" : `Risk Assessment: ${status.risk_level}`}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {/* <span className="font-semibold text-foreground text-sm tracking-wide uppercase">
+                      {status.status === "Processing" ? "Deep Scan in Progress" : "Risk Assessment Completed"}
+                    </span> */}
+                    {status.status === "Processing" && (
+                      <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">
+                        RISK: {status.risk_level}
+                      </span>
+                    )}
+                  </div>
+                  {!status.status.includes("Processing") && status.status !== "Processing" && (
+                    <span className="font-semibold text-foreground text-sm tracking-wide uppercase block">
+                      Risk Assessment: {status.risk_level}
+                    </span>
+                  )}
                   <p className="text-[10px] text-muted-foreground mt-0.5">
                     {status.status === "Processing"
                       ? status.message
@@ -314,6 +337,6 @@ export default function FilingDetail() {
           </p>
         )}
       </div>
-    </div>
+    </div >
   );
 }

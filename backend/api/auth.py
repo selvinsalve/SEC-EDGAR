@@ -16,9 +16,7 @@ class RegisterRequest(BaseModel):
     password: str
     first_name: str
     last_name: str
-    age: int
     business_details: str
-    address: str
 
 class LoginRequest(BaseModel):
     user_id: str
@@ -36,9 +34,7 @@ def register(user: RegisterRequest, db: Session = Depends(get_db)):
         password_hash=hashed_password,
         first_name=user.first_name,
         last_name=user.last_name,
-        # age=user.age,
         business_details=user.business_details,
-        address=user.address
     )
     db.add(new_user)
     db.commit()

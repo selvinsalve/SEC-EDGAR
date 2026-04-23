@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { FileText, ExternalLink, Download } from "lucide-react";
+import { FileText, ExternalLink, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface PDFPreviewPaneProps {
@@ -7,7 +7,8 @@ interface PDFPreviewPaneProps {
 }
 
 export function PDFPreviewPane({ filingType }: PDFPreviewPaneProps) {
-  const previewUrl = `http://localhost:8000/api/preview/${filingType}`;
+  const timestamp = Date.now();
+  const previewUrl = `http://localhost:8000/api/preview/${filingType}?t=${timestamp}`;
 
   return (
     <Card className="bg-card border-border shadow-md overflow-hidden animate-in fade-in zoom-in duration-500">
@@ -17,19 +18,30 @@ export function PDFPreviewPane({ filingType }: PDFPreviewPaneProps) {
           Generated Form {filingType} Preview
         </CardTitle>
         <div className="flex gap-2">
-          <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
+          <Button variant="outline" size="sm" className="h-7 text-[10px] font-bold uppercase tracking-wider" asChild>
             <a href={previewUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="w-3 h-3 mr-1.5" />
+              Open in New Window
             </a>
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="p-0 bg-secondary/20 aspect-[4/5] relative">
+      <CardContent className="p-0 bg-secondary/20 aspect-[4/5] relative min-h-[600px]">
         <iframe 
           src={`${previewUrl}#toolbar=0&navpanes=0&scrollbar=0`}
           className="w-full h-full border-none"
           title="PDF Preview"
-        />
+        >
+          <div className="flex flex-col items-center justify-center h-full p-10 text-center">
+            <AlertTriangle className="w-10 h-10 text-amber-500 mb-4" />
+            <p className="text-sm text-foreground mb-4">Your browser doesn't support PDF previews in iFrames.</p>
+            <Button asChild>
+              <a href={previewUrl} target="_blank" rel="noopener noreferrer">
+                View PDF Document
+              </a>
+            </Button>
+          </div>
+        </iframe>
         <div className="absolute bottom-4 right-4 shadow-2xl">
            <p className="text-[10px] bg-background/80 backdrop-blur-sm px-2 py-1 rounded border border-border text-muted-foreground">
              Interactive Preview Mode

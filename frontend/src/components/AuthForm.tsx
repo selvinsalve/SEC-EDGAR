@@ -12,9 +12,7 @@ export function AuthForm() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
   const [businessDetails, setBusinessDetails] = useState("");
-  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -31,9 +29,7 @@ export function AuthForm() {
           password,
           first_name: firstName,
           last_name: lastName,
-          age: parseInt(age),
           business_details: businessDetails,
-          address
         });
         setIsLogin(true);
         setError("Registration successful. Please sign in.");
@@ -69,6 +65,37 @@ export function AuthForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {!isLogin && (
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="firstName" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
+                  First Name
+                </Label>
+                <Input
+                  id="firstName"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                  className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
+                  required
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="lastName" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
+                  Last Name
+                </Label>
+                <Input
+                  id="lastName"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
+                  className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
+                  required
+                />
+              </div>
+            </div>
+          )}
+
           <div className="space-y-1.5">
             <Label htmlFor="userId" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
               {isLogin ? "User ID (Email)" : "Email"}
@@ -99,79 +126,19 @@ export function AuthForm() {
           </div>
 
           {!isLogin && (
-            <>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="firstName" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
-                    First Name
-                  </Label>
-                  <Input
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First Name"
-                    className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="lastName" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
-                    Last Name
-                  </Label>
-                  <Input
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last Name"
-                    className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* <div className="space-y-1.5">
-                <Label htmlFor="age" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
-                  Age
-                </Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  placeholder="Age"
-                  className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
-                  required
-                />
-              </div> */}
-
-              <div className="space-y-1.5">
-                <Label htmlFor="businessDetails" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
-                  Business Details
-                </Label>
-                <Input
-                  id="businessDetails"
-                  value={businessDetails}
-                  onChange={(e) => setBusinessDetails(e.target.value)}
-                  placeholder="Company Name"
-                  className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
-                  required
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="address" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
-                  Address
-                </Label>
-                <Input
-                  id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Full Address"
-                  className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
-                  required
-                />
-              </div>
-            </>
+            <div className="space-y-1.5">
+              <Label htmlFor="businessDetails" className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
+                Business Details
+              </Label>
+              <Input
+                id="businessDetails"
+                value={businessDetails}
+                onChange={(e) => setBusinessDetails(e.target.value)}
+                placeholder="Company Name"
+                className="bg-secondary border-border focus:ring-primary text-sm rounded-sm"
+                required
+              />
+            </div>
           )}
 
           {error && (
