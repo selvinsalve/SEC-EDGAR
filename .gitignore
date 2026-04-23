@@ -48,3 +48,6 @@ frontend/build/
 # OS
 .DS_Store
 Thumbs.db
+
+
+project_docs.txt
